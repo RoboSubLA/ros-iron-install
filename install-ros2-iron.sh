@@ -8,6 +8,11 @@ control_c () {
 
 trap control_c SIGINT SIGTERM
 
+if [ -z "$SUDO_USER" ]; then                                                    
+    echo "Please run this script as sudo!"                                      
+    exit                                                                        
+fi
+
 # Flag gets
 DEV=false
 GAZEBO=false
@@ -59,11 +64,11 @@ if [ -z "$ROS_DISTRO" ]; then
 	# ROS2 installation
 	sudo apt install ros-iron-desktop -y
 
-	echo '' >> ~/.bashrc
-	echo '# ROS2 stuff' >> ~/.bashrc
-	echo 'alias iron="source /opt/ros/iron/setup.bash"' >> ~/.bashrc
-	echo '' >> ~/.bashrc
-	echo 'iron' >> ~/.bashrc
+	echo '' >> /home/$SUDO_USER/.bashrc
+	echo '# ROS2 stuff' >> /home/$SUDO_USER/.bashrc
+	echo 'alias iron="source /opt/ros/iron/setup.bash"' >> /home/$SUDO_USER/.bashrc
+	echo '' >> /home/$SUDO_USER/.bashrc
+	echo 'iron' >> /home/$SUDO_USER/.bashrc
 elif [ "$ROS_DISTRO" != "iron" ]; then
 	echo "Another version of ROS is already installed! Please uninstall it first"
 else
@@ -85,4 +90,4 @@ if [ "$GAZEBO" = true ]; then
 	sudo apt install ros-iron-ros-gz -y
 fi
 
-source ~/.bashrc
+source /home/$SUDO_USER/.bashrc

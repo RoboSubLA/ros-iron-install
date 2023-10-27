@@ -84,3 +84,5 @@ if [ "$GAZEBO" = true ]; then
 	# Gazebo installation
 	sudo apt install ros-iron-ros-gz -y
 fi
+
+source ~/.bashrc
